@@ -4,6 +4,25 @@ import AddApointments from "./AddAppointments";
 import SearchApointments from "./SearchAppointments";
 import ListApointments from "./ListAppointments";
 class App extends Component {
+  constructor(props) {
+    super();
+    this.state = {
+      myAppointments: [],
+    };
+  }
+  componentDidMount = () => {
+    fetch("./data.json")
+      .then((response) => response.json())
+      .then((result) => {
+        const apts = result.map((item) => {
+          return item;
+        });
+        this.setState({
+          myAppointments: apts,
+        });
+      });
+  };
+
   render() {
     return (
       <main className="page bg-white" id="petratings">
@@ -13,7 +32,7 @@ class App extends Component {
               <div className="container">
                 <AddApointments />
                 <SearchApointments />
-                <ListApointments />
+                <ListApointments appointments={this.state.myAppointments} />
               </div>
             </div>
           </div>
